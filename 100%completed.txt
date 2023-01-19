@@ -1,0 +1,511 @@
+#include <stdio.h>
+#include <string.h>
+#include<windows.h>
+//#include<conio.h>
+
+struct food_category {
+	char fc[100];
+	char first_food[20];
+	char second_food[20];
+	char third_food[20];
+	char fourth_food[25];
+	char fifth_food[20];
+	char sixth_food[20];
+	char seventh_food[20];
+	char eighth_food[20];
+	int first, second, third, fourth, fifth, sixth, seventh, eighth;
+};
+struct food_category m[10];
+void search_by_food_catogory();
+void search_by_food();
+void food_order(int food);
+void food_initialize();
+void cart();
+void exit();
+void category(int category_choice);
+int success = 0, x, choice;
+int  total = 0, food_choice, n, c, s;
+int category_choice, search_choice, confirm;
+int ch, food, food_category_id;
+
+    struct login{
+
+    char fname[100];
+    char lname [100];
+    char username [100];
+    char password[100];
+    };
+ void registe()
+{
+    printf(""
+            " \n                                   =Welcome to Barcode Restaurant=                       \n ");
+    printf("                                          ~Rupatoli, Barishal~                               \n");
+    printf("                                      ***Regestration Interface***\n  ");
+    FILE *log;
+    log=fopen("login12.txt","w");
+    struct login l;
+    printf("Enter First Name:\n ");
+    scanf("%s",l.fname);
+    printf("Enter Last Name:\n ");
+    scanf("%s",l.lname);
+
+    printf("Enter Username:\n ");
+    scanf("%s",l.username);
+
+    printf("Enter Password:\n");
+    scanf("%s",l.password);
+
+    fwrite(&l,sizeof(l),1, log);
+
+    fclose(log);
+    printf("-----Regestration successful......");
+    printf("\nNow enter your username & password to login into Admin Panel\n");
+    printf("enter any key to continue.....");
+    getch();
+    system("CLS");
+    //login();
+
+}
+
+ void login()
+{
+    printf(""
+        " \n\n                               =Welcome to Barcode Restaurant=                       \n ");
+   printf("                                      ~Rupatoli, Barishal~                               \n");
+   printf("\n\n\n");
+   char username[200], password[20];
+   FILE *log;
+   log=fopen("login12.txt","r");
+   struct login l;
+   printf("To log into admin panel please enter your Username & password: \n\n");
+   printf("Enter username: \n");
+   scanf("%s",username);
+   printf("Enter password: \n");
+   scanf("%s",password);
+
+   while(fread(&l,sizeof(l),1,log))
+   {
+       if (strcmp(username,l.username)==0 && strcmp(password,l.password)==0)
+       {
+        system("CLS");
+        printf(""
+        " \n\n                                     =Welcome to Barcode Restaurant=                       \n ");
+        printf("                                        ~Rupatoli, Barishal~                               \n");
+        printf("                                   ~food items & billing interface~\n\n\n\n\n\n");
+        printf("\n\nSuccsfully Logged in......\n");
+        printf("\n\n");
+        printf("~$$~ Creating a new bill ~$$~ ");
+        printf("\n");
+        printf("1)Search Meal :\n");
+        printf("2)Search by Food items :\n");
+		printf("3)Exit\n\n");
+		printf("Enter your choice\t");
+		scanf("%d", &search_choice);
+		switch (search_choice) {
+		    case 1:{
+		       search_by_food_catogory();
+		    }
+		case 2: {
+			search_by_food();
+			break;
+		}
+		case 3: {
+			// exit(1);
+			//return 0;
+		}
+		default: {
+			printf("\nPlease Enter the ");
+			printf("valid choice\n");
+			break;
+		}
+		}
+       }
+       else{
+        printf("Please Enter Correct Username and Password\n");
+       }
+   }
+   fclose(log);
+
+}
+
+int main()
+{
+
+
+    //SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),BACKGROUND_BLUEBACKGROUND_INTENSITY);
+	while (1) {
+
+		printf(""
+			" \n\n                               =Welcome to The Barcode Restaurant=                       \n ");
+		printf("                                       ~Rupatoli, Barishal~                               \n");
+		printf("\n\n");
+		printf("1)Regestration\n");
+		printf("2)Login\n");
+		printf("3)Exit\n");
+		printf("Enter your choice\t");
+		scanf("%d", &s);
+		system("CLS");
+		switch (s) {
+		    case 1:{
+		        registe();
+		    }
+		    system("CLS");
+		    case 2:{
+		         login();
+		    }
+		    case 3:{
+		    return 0;
+		    }
+		}
+	}
+}
+ void food_initialize()
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),BACKGROUND_RED|BACKGROUND_INTENSITY);
+	strcpy(m[1].fc, "Break_Fast");
+	strcpy(m[1].first_food, "Sandwich");
+	strcpy(m[1].second_food, "Pizza");
+	strcpy(m[1].third_food, "Noodles");
+	strcpy(m[1].fourth_food, "Parata_with_vegetables");
+	strcpy(m[1].fifth_food, "Parata_with_eggs");
+	strcpy(m[1].sixth_food, "Teheri");
+	strcpy(m[1].seventh_food, "Khichuri_with_eggs");
+    strcpy(m[1].eighth_food, "Tea");
+	m[1].first = 50;
+	m[1].second = 100;
+	m[1].third = 95;
+	m[1].fourth = 40;
+	m[1].fifth= 50;
+	m[1].sixth = 50;
+	m[1].seventh = 50;
+	m[1].eighth = 10;
+
+
+	strcpy(m[2].fc, "Lunch");
+	strcpy(m[2].first_food, "Rice_with_fish");
+	strcpy(m[2].second_food, "Rice_with_chicken");
+	strcpy(m[2].third_food, "Rice_with_eggs");
+	strcpy(m[2].fourth_food, "Rice_with_beef");
+	strcpy(m[2].fifth_food, "Rice_with_mutton");
+	strcpy(m[2].sixth_food, "chicken_Biriyani");
+	strcpy(m[2].seventh_food, "kacchi_Biriyani");
+	strcpy(m[2].eighth_food, "chicken_khichuri");
+	m[2].first = 80;
+	m[2].second = 120;
+	m[2].third = 60;
+    m[2].fourth = 150;
+	m[2].fifth = 180;
+	m[2].sixth = 140;
+    m[2].seventh = 220;
+	m[2].eighth = 100;
+
+
+
+	strcpy(m[3].fc, "Dinner");
+	strcpy(m[3].first_food, "Rice_with_fish");
+	strcpy(m[3].second_food, "Rice_with_chicken");
+	strcpy(m[3].third_food, "Rice_with_eggs");
+	strcpy(m[3].fourth_food, "Rice_with_beef");
+	strcpy(m[3].fifth_food, "Rice_with_mutton");
+	strcpy(m[3].sixth_food, "chicken_Biriyani");
+	strcpy(m[3].seventh_food, "kacchi_Biriyani");
+	strcpy(m[3].eighth_food, "Nunrooti_with_grill");
+	m[3].first = 80;
+	m[3].second = 120;
+	m[3].third = 60;
+    m[3].fourth = 150;
+	m[3].fifth = 180;
+	m[3].sixth = 140;
+    m[3].seventh = 220;
+	m[3].eighth = 200;
+}
+void search_by_food_catogory()
+{
+	food_initialize();
+	printf(""
+		"\n\nPlease Choose the");
+	printf(" Meal \n\n1) %s\n2) %s\n3) %s",
+		m[1].fc,
+		m[2].fc, m[3].fc);
+	printf("\n4) Exit\n\nPlease ");
+	printf("select the category\t");
+	scanf("%d", &category_choice);
+	if (category_choice > 4) {
+		printf("Please Enter the");
+		printf("valid choice\n\n");
+		search_by_food_catogory();
+	}
+	else if (category_choice == 4)
+		// exit(1);
+		return;
+	else
+		 category( category_choice);
+}
+void category(int category_choice)
+{
+	total = 0;
+	while (1) {
+
+		printf("\n\nList of foods available");
+
+		printf(" in %s\n\n1) %s\tTaka: %d\n",
+			m[category_choice].fc,
+			m[category_choice].first_food,
+			m[category_choice].first);
+
+		printf("2) %s\tTaka: %d\n3) %s\tTaka: %d\n",
+			m[category_choice].second_food,
+			m[category_choice].second,
+			m[category_choice].third_food,
+			m[category_choice].third);
+        printf("4) %s\tTaka: %d\n5) %s\tTaka: %d\n",
+            m[category_choice].fourth_food,
+			m[category_choice].fourth,
+			m[category_choice].fifth_food,
+			m[category_choice].fifth);
+            printf("6) %s\tTaka: %d\n7) %s\tTaka: %d\n",
+            m[category_choice].sixth_food,
+			m[category_choice].sixth,
+			m[category_choice].seventh_food,
+			m[category_choice].seventh);
+			printf("8) %s\tTaka: %d\n",
+			m[category_choice].eighth_food,
+			m[category_choice].eighth
+			);
+
+
+		printf("9) Cart\n10) Exit\n\nPlease Enter");
+		printf("Your Choice\t");
+		scanf("%d", &food_choice);
+		if (food_choice == 1) {
+			printf("Please Enter the ");
+			printf("Count of %s\t",
+				m[category_choice].first_food);
+			scanf("%d", &n);
+			total = total
+					+ (n * m[category_choice].first);
+		}
+		else if (food_choice == 2) {
+			printf("Please Enter the Count");
+			printf("of %s\t",
+				m[category_choice].second_food);
+			scanf("%d", &n);
+			total = total
+					+ (n * m[category_choice].second);
+		}
+		else if (food_choice == 3) {
+			printf("Please Enter the Count");
+			printf("of %s\t",
+				m[category_choice].third_food);
+			scanf("%d", &n);
+			total = total
+					+ (n * m[category_choice].third);
+		}
+		else if (food_choice == 4) {
+			printf("Please Enter the Count");
+			printf("of %s\t",
+				m[category_choice].fourth_food);
+			scanf("%d", &n);
+			total = total
+					+ (n * m[category_choice].fourth);
+		}
+		else if (food_choice == 5) {
+			printf("Please Enter the Count");
+			printf("of %s\t",
+				m[category_choice].fifth_food);
+			scanf("%d", &n);
+			total = total
+					+ (n * m[category_choice].fifth);
+		}
+		else if (food_choice == 6) {
+			printf("Please Enter the Count");
+			printf("of %s\t",
+				m[category_choice].sixth_food);
+			scanf("%d", &n);
+			total = total
+					+ (n * m[category_choice].sixth);
+		}
+		else if (food_choice == 7) {
+			printf("Please Enter the Count");
+			printf("of %s\t",
+				m[category_choice].seventh_food);
+			scanf("%d", &n);
+			total = total
+					+ (n * m[category_choice].seventh);
+		}
+           else if (food_choice == 8) {
+			printf("Please Enter the Count");
+			printf("of %s\t",
+				m[category_choice].eighth_food);
+			scanf("%d", &n);
+			total = total
+					+ (n * m[category_choice].eighth);
+		}
+
+
+		else if (food_choice == 9) {
+			cart();
+		}
+		else if (food_choice == 10) {
+			search_by_food();
+		}
+		else {
+			printf("Please Enter the");
+			printf("valid Choice\n\n");
+		}
+	}
+}
+
+void search_by_food()
+{
+	total = 0;
+
+	food_initialize();
+	while (1) {
+		printf("\n\nPlease choose the ");
+		printf("food\n\n1) %s\t%d\n2) %s\t%d\n3) %s\t%d\n4) %s\t%d\n5)%s\t%d\n6) %s\t%d\n7) %s\t%d\n8) %s\t%d\n",
+			m[1].first_food, m[1].first,
+			m[1].second_food, m[1].second,
+			m[1].third_food, m[1].third,
+			m[1].fourth_food, m[1].fourth,
+			m[1].fifth_food, m[1].fifth,
+			m[1].sixth_food, m[1].sixth,
+			m[1].seventh_food, m[1].seventh,
+			m[1].eighth_food, m[1].eighth);
+        printf("food\n\n9) %s\t%d\n10) %s\t%d\n11) %s\t%d\n12) %s\t%d\n13)%s\t%d\n14) %s\t%d\n15) %s\t%d\n16) %s\t%d\n",
+			m[2].first_food, m[1].first,
+			m[2].second_food, m[1].second,
+			m[2].third_food, m[1].third,
+			m[2].fourth_food, m[1].fourth,
+			m[2].fifth_food, m[1].fifth,
+			m[2].sixth_food, m[1].sixth,
+			m[2].seventh_food, m[1].seventh,
+			m[2].eighth_food, m[1].eighth);
+			printf("food\n\n17) %s\t%d\n18) %s\t%d\n19) %s\t%d\n20) %s\t%d\n21)%s\t%d\n22) %s\t%d\n23) %s\t%d\n23) %s\t%d\n",
+			m[3].first_food, m[1].first,
+			m[3].second_food, m[1].second,
+			m[3].third_food, m[1].third,
+			m[3].fourth_food, m[1].fourth,
+			m[3].fifth_food, m[1].fifth,
+			m[3].sixth_food, m[1].sixth,
+			m[3].seventh_food, m[1].seventh,
+			m[3].eighth_food, m[1].eighth);
+
+		printf("\n9) Cart\n");
+		printf("\n10) Exit");
+		printf("\nPlease Enter Your Choice\t");
+		scanf("%d", &food);
+		if (food > 10) {
+			printf("Please Enter the ");
+			printf("valid choice\n\n");
+			search_by_food();
+		}
+		// Moves to the cart
+		// functionality
+		else if (food == 9 )
+			cart();
+		else if (food == 10 )
+			// exit(1);
+			return;
+		else
+			food_order(food);
+	}
+}
+void food_order(int food)
+{
+	if (food >= 1 && food <= 8)
+		food_category_id = 1;
+	else if (food >= 9 && food <= 16)
+		food_category_id = 2;
+	else
+		food_category_id = 3;
+	if ((food % 8) == 1) {
+		printf("Please Enter the");
+		printf(" Count of %s\t",
+			m[food_category_id].first_food);
+		scanf("%d", &n);
+		total = total + (n * m[food_category_id].first);
+	}
+	else if ((food % 8) == 2) {
+		printf("Please Enter the ");
+		printf("Count of %s\t",
+			m[food_category_id].second_food);
+		scanf("%d", &n);
+		total = total + (n * m[food_category_id].second);
+	}
+	else if ((food % 8) == 3) {
+		printf("Please Enter the ");
+		printf("Count of %s\t",
+			m[food_category_id].third_food);
+		scanf("%d", &n);
+		total = total + (n * m[food_category_id].third);
+	}
+}
+void cart()
+{
+	printf("\n\n\n\n--------------Cart");
+	printf("----------------");
+	printf("\nYour Total Order");
+	printf("Amount is %d\n", total);
+	printf("\n\nDo You wish to conform customer ");
+	printf("order ? (y=1/n=0):");
+	scanf("%d",&c);
+	if (c == 1)
+    {
+     printf("select customer payment method :\n");
+
+	printf("\n 1)Mastercad\n");
+    printf("\n 2)Cash\n");
+    printf("\n 3)Bkash\n");
+    printf("\n 4)Nagad\n");
+	scanf("%d", &ch);
+	switch (ch) {
+	    case 1:{
+       printf("enter customer card no :\n");
+        exit(1);
+		//break;
+	}
+	case 2: {
+       printf("payment by cash\n");
+		 exit(2);
+		//break;
+	}
+	case 3:{
+       printf("enter customer bkash no: \n");
+		 exit(3);
+		//break;
+	}
+	case 4: {
+       printf("enter customer Nagad no :\n");
+		exit(4);
+		break;
+	}
+	}
+    }
+
+	else if (c == 0) {
+		printf("If You want to exit, then press '1' ");
+		printf("or To Go back, press '0' ");
+		scanf("%d", &confirm);
+		if (confirm == 1) {
+			printf("\n\nOops! Your order is");
+			printf("cancelled!! Exiting..");
+			printf("Thank You visit again!\n");
+			// exit(1);
+			return;
+		}
+		else {
+			printf("\n\nThank You\n\n");
+		}
+	}
+	else {
+		printf("\n\nPlease Enter the ");
+		printf("correct choice\n\n");
+		cart();
+	}
+}
+
+
+
+
+
